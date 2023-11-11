@@ -21,9 +21,19 @@ namespace BussinessLayer
         [Required]
         public ICollection<Model> Models { get; set; }
 
+        [Required]
+        public ICollection<Aircraft> Aircrafts { get; set; }
+
+        [Required]
+        public ICollection<Boat> Boats { get; set; }
+
+
+
         private Brand()
         {
             Models = new List<Model>();
+            Aircrafts = new List<Aircraft>();
+            Boats = new List<Boat>();
         }
         
         public Brand(int brandId, ICollection<Model> models)

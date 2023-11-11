@@ -23,7 +23,17 @@ namespace BussinessLayer
 
         public Brand brand { get; set; }
 
-        private Model() {}
+        [Required]
+        public ICollection<Aircraft> Aircrafts { get; set; }
+
+        [Required]
+        public ICollection<Boat> Boats { get; set; }
+
+        private Model() 
+        {
+            Aircrafts = new List<Aircraft>();
+            Boats = new List<Boat>();
+        }
 
         public Model(int modelId, string name, int brandId)
         {
