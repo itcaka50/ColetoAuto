@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class IDb
-    {
-        public interface IDB<T, K> where K : IConvertible
+
+        public interface IDb<T, K> where K : IConvertible
         {
             void Create(T item);
 
@@ -21,5 +20,5 @@ namespace DataLayer
             void Delete(K key);
 
         }
-    }
+    
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    internal class UserContext
+    public class UserContext : IDb<User>
     {
+
     }
 }
