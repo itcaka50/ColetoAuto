@@ -1,26 +1,28 @@
-﻿using System;
+﻿using BussinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BussinessLayer;
 using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class UserContext : IDb<User, int>
+    public class BrandContext : IDb<Brand, int>
     {
+       
+ 
         MeowDbContext dBContext;
 
-        public UserContext(MeowDbContext dBContext_)
+        public BrandContext(MeowDbContext dBContext_)
         {
             this.dBContext = dBContext_;
         }
 
-        public void Create(User user)
+        public void Create(Brand brand)
         {
             try
             {
-                dBContext.Users.Add(user);
+                dBContext.Brands.Add(brand);
                 dBContext.SaveChanges();
             }
             catch (Exception)
@@ -33,8 +35,8 @@ namespace DataLayer
         {
             try
             {
-                User userFromDB = Read(key);
-                dBContext.Users.Remove(userFromDB);
+                Brand brandFromDB = Read(key);  
+                dBContext.Brands.Remove(brandFromDB);
                 dBContext.SaveChanges();
             }
             catch (Exception)
@@ -43,11 +45,11 @@ namespace DataLayer
             }
         }
 
-        public User Read(int key, bool useNavigationalProperties = false)
+        public Brand Read(int key, bool useNavigationalProperties = false)
         {
             try
             {
-                return dBContext.Users.Find(key);
+                return dBContext.Brands.Find(key);
             }
             catch (Exception)
             {
@@ -55,11 +57,11 @@ namespace DataLayer
             }
         }
 
-        public IEnumerable<User> ReadAll(bool useNavigationalProperties = false)
+        public IEnumerable<Brand> ReadAll(bool useNavigationalProperties = false)
         {
             try
             {
-                return dBContext.Users.ToList();
+                return dBContext.Brands.ToList();
             }
             catch (Exception)
             {
@@ -67,11 +69,11 @@ namespace DataLayer
             }
         }
 
-        public void Update(User item, bool useNavigationalProperties = false)
+        public void Update(Brand item, bool useNavigationalProperties = false)
         {
             try
             {
-                dBContext.Users.Update(item);
+                dBContext.Brands.Update(item);
                 dBContext.SaveChanges();
             }
             catch (Exception)
