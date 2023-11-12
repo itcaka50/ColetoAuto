@@ -14,8 +14,10 @@ namespace BussinessLayer
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Range(0, int.MaxValue)]
         public double Price { get; set; }
 
+        [Range(0, int.MaxValue)]
         public int Hp { get; set; }
 
         [MaxLength(1000)]
@@ -24,12 +26,12 @@ namespace BussinessLayer
         [ForeignKey("Brand")]
         public int BrandIdF { get; set; }
 
-        public Brand brand { get; set; }
+        public Brand Brand { get; set; }
 
         [ForeignKey("Model")]
         public int ModelIdF { get; set; }
 
-        public Model model { get; set; }
+        public Model Model { get; set; }
 
         private Boat()
         {

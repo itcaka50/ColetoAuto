@@ -35,9 +35,8 @@ namespace BussinessLayer
             Boats = new List<Boat>();
         }
 
-        public Model(int modelId, string name, int brandId)
+        public Model(string name, int brandId)
         {
-            ModelId = modelId;
             Name = name;
             BrandIdF = brandId;
         }

@@ -31,15 +31,17 @@ namespace BussinessLayer
 
         private Brand()
         {
-            Models = new List<Model>();
-            Aircrafts = new List<Aircraft>();
-            Boats = new List<Boat>();
+            this.Models = new List<Model>();
+            this.Aircrafts = new List<Aircraft>();
+            this.Boats = new List<Boat>();
         }
         
-        public Brand(int brandId, ICollection<Model> models)
+        public Brand(string name_)
         {
-            this.BrandId = brandId;
-            this.Models = models;
+            this.Name = name_;
+            this.Models = new List<Model>();
+            this.Aircrafts = new List<Aircraft>();
+            this.Boats = new List<Boat>();
         }
     }
 }
