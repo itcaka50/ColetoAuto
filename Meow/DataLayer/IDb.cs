@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
+    public interface IDb<T, K> where K : IConvertible
+    {
+        void Create(T item);
 
-        public interface IDb<T, K> where K : IConvertible
-        {
-            void Create(T item);
+        T Read(K key, bool useNavigationalProperties = false);
 
-            T Read(K key, bool useNavigationalProperties = false);
+        IEnumerable<T> ReadAll(bool useNavigationalProperties = false);
 
-            IEnumerable<T> ReadAll(bool useNavigationalProperties = false);
+        void Update(T item, bool useNavigationalProperties = false);
 
-            void Update(T item, bool useNavigationalProperties = false);
+        void Delete(K key);
 
-            void Delete(K key);
-
-        }
-    
+    }
 }
