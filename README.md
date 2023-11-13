@@ -10,6 +10,10 @@ Chasti(cena, marka, model) foreign key marka, foreign key model
 Marka
 Model
 
+Asinhronni data layer contexti, nav svoistva
+class vehicle abstract nasledqvat car, boat, aircraft
+dobavi car promenliva v brand i model
+
 WEBSITE:
 LOG PAGE
 MAIN PAGE
