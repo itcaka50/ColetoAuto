@@ -37,9 +37,8 @@ namespace BussinessLayer
         {
                 
         }
-        public Boat(int id, double price, int hp, string description, int brandId, int ModelId)
+        public Boat(double price, int hp, string description, int brandId, int ModelId)
         {
-            Id = id;
             Price = price;
             Hp = hp;
             Description = description;

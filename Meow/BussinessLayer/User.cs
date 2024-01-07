@@ -38,9 +38,8 @@ namespace BussinessLayer
 
         }
 
-        public User(int id, string name, string pass, string adress, int age, string email, string phone)
+        public User(string name, string pass, string adress, int age, string email, string phone)
         {
-            Id = id;
             Name = name;
             Password = pass;
             Adress = adress;
