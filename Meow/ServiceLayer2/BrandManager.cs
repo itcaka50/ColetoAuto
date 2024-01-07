@@ -6,7 +6,7 @@ using DataLayer;
 using System.Threading.Tasks;
 using BussinessLayer;
 
-namespace ServiceLayer
+namespace ServiceLayer2
 {
     public class BrandManager
     {

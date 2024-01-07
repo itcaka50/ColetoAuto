@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DataLayer;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace ServiceLayer
+namespace ServiceLayer2
 {
     public class ModelManager
     {
