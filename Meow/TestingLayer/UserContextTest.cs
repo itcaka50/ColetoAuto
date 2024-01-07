@@ -17,15 +17,15 @@ namespace TestingLayer
         private User user;
 
         [SetUp]
-        public void CreateUser()
+        public async Task CreateUser()
         {
             user = new User("Coleto", "1112", "Coleto Street", 12, "colaja@coleto.cole", "0888755832");
 
-            context.CreateAsync(user);
+            await context.CreateAsync(user);
         }
 
         [TearDown]
-        public void DropBrand()
+        public async Task DropBrand()
         {
             foreach (User item in SetupFixture.dbContext.Users)
             {
@@ -41,7 +41,7 @@ namespace TestingLayer
             User newUser = new User("Georgi", "ColetoRules", "Coleto Street", 13, "colaja2@coleto.cole", "0889392834");
 
             int usersBefore = SetupFixture.dbContext.Users.Count();
-            context.CreateAsync(newUser);
+            await context.CreateAsync(newUser);
 
             int usersAfter = SetupFixture.dbContext.Users.Count();
             Assert.IsTrue(usersBefore + 1 == usersAfter, "Create() does not work!");
