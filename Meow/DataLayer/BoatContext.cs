@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    internal class BoatContext : IDb<Boat, int>
+    public class BoatContext : IDb<Boat, int>
     {
         MeowDbContext dbContext;
         public BoatContext(MeowDbContext dbContext_)

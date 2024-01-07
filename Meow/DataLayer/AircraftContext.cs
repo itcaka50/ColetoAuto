@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    internal class AircraftContext : IDb<Aircraft, int>
+    public class AircraftContext : IDb<Aircraft, int>
     {
         MeowDbContext dbContext;
         public AircraftContext(MeowDbContext dbContext_)
