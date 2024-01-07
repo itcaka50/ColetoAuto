@@ -39,9 +39,8 @@ namespace BussinessLayer
                 
         }
 
-        public Aircraft(int id, double price, int thrust, string description, int brandId, int ModelId)
+        public Aircraft(double price, int thrust, string description, int brandId, int ModelId)
         {
-            Id = id;
             Price = price;
             Thrust = thrust;
             Description = description;
