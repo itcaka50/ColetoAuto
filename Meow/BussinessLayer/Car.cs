@@ -52,9 +52,8 @@ namespace BussinessLayer
 
         }
 
-        public Car(int id_, Brand brand_, Model model_, double price_, int mileage_, DateOnly dateOfProduction_, int horsePower_, string description_)
+        public Car(Brand brand_, Model model_, double price_, int mileage_, DateOnly dateOfProduction_, int horsePower_, string description_)
         {
-            this.CarId = id_;
             this.Brand = brand_;
             this.Model = model_;
             this.Price = price_;
