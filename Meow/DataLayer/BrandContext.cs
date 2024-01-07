@@ -18,12 +18,12 @@ namespace DataLayer
             this.dBContext = dBContext_;
         }
 
-        public void Create(Brand brand)
+        public async Task CreateAsync(Brand brand)
         {
             try
             {
                 dBContext.Brands.Add(brand);
-                dBContext.SaveChanges();
+                await dBContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -31,13 +31,13 @@ namespace DataLayer
             }
         }
 
-        public void Delete(int key)
+        public async Task DeleteAsync(int key)
         {
             try
             {
-                Brand brandFromDB = Read(key);  
+                Brand brandFromDB = await ReadAsync(key, false, false);  
                 dBContext.Brands.Remove(brandFromDB);
-                dBContext.SaveChanges();
+                await dBContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -45,7 +45,7 @@ namespace DataLayer
             }
         }
 
-        public Brand Read(int key, bool useNavigationalProperties = false)
+        public async Task<Brand> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace DataLayer
             }
         }
 
-        public IEnumerable<Brand> ReadAll(bool useNavigationalProperties = false)
+        public async Task<ICollection<Brand>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
@@ -69,12 +69,12 @@ namespace DataLayer
             }
         }
 
-        public void Update(Brand item, bool useNavigationalProperties = false)
+        public async Task UpdateAsync(Brand item, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
                 dBContext.Brands.Update(item);
-                dBContext.SaveChanges();
+                await dBContext.SaveChangesAsync();
             }
             catch (Exception)
             {
