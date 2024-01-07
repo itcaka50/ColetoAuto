@@ -1,4 +1,5 @@
 ﻿using BussinessLayer;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,12 @@ namespace DataLayer
         }
 
 
-        public void Create(Aircraft item)
+        public async Task CreateAsync(Aircraft item)
         {
             try
             {
                 dbContext.Aircrafts.Add(item);
-                dbContext.SaveChanges();
+                dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -29,13 +30,13 @@ namespace DataLayer
             }
         }
 
-        public void Delete(int key)
+        public async Task DeleteAsync(int key)
         {
             try
             {
-                Aircraft aircraftFromDb = Read(key);
+                Aircraft aircraftFromDb = await ReadAsync(key, false, false);
                 dbContext.Aircrafts.Remove(aircraftFromDb);
-                dbContext.SaveChanges();
+                dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -43,11 +44,17 @@ namespace DataLayer
             }
         }
 
-        public Aircraft Read(int key, bool useNavigationalProperties = false)
+        public async Task<Aircraft> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             try
             {
-                return dbContext.Aircrafts.Find(key);
+                IQueryable<Aircraft> query = dbContext.Aircrafts;
+                if (useNavigationalProperties)
+                {
+                    query = query.Include(a => a.Brand)
+                                 .Include(a => a.Model);
+                }
+                return await query.FirstOrDefaultAsync(a => a.Id == key);
             }
             catch (Exception)
             {
@@ -55,7 +62,7 @@ namespace DataLayer
             }
         }
 
-        public IEnumerable<Aircraft> ReadAll(bool useNavigationalProperties = false)
+        public async Task<ICollection<Aircraft>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             try
             {
@@ -67,17 +74,29 @@ namespace DataLayer
             }
         }
 
-        public void Update(Aircraft item, bool useNavigationalProperties = false)
+        public async Task UpdateAsync(Aircraft item, bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             try
             {
-                dbContext.Aircrafts.Update(item);
-                dbContext.SaveChanges();
+                Aircraft aircraftFromDB = await ReadAsync(item.Id, useNavigationalProperties, false);
+
+                if (aircraftFromDB == null) { await CreateAsync(item); }
+
+                dbContext.Entry(aircraftFromDB).CurrentValues.SetValues(item);
+
+                if (useNavigationalProperties)
+                {
+                    aircraftFromDB.Brand = item.Brand;
+                    aircraftFromDB.Model = item.Model;
+                }
+
+                await dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
                 throw;
             }
         }
+
     }
 }

@@ -16,12 +16,12 @@ namespace DataLayer
         }
 
 
-        public void Create(Model item)
+        public async Task CreateAsync(Model item)
         {
             try
             {
                 dbContext.Models.Add(item);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -29,13 +29,13 @@ namespace DataLayer
             }
         }
 
-        public void Delete(int key)
+        public async Task DeleteAsync(int key)
         {
             try
             {
-                Model modelFromDb = Read(key);
+                Model modelFromDb = await ReadAsync(key, false, false);
                 dbContext.Models.Remove(modelFromDb);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -43,7 +43,7 @@ namespace DataLayer
             }
         }
 
-        public Model Read(int key, bool useNavigationalProperties = false)
+        public async Task<Model> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace DataLayer
             }
         }
 
-        public IEnumerable<Model> ReadAll(bool useNavigationalProperties = false)
+        public async Task<ICollection<Model>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
@@ -67,12 +67,12 @@ namespace DataLayer
             }
         }
 
-        public void Update(Model item, bool useNavigationalProperties = false)
+        public async Task UpdateAsync(Model item, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
                 dbContext.Models.Update(item);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
