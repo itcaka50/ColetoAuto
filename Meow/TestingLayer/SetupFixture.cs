@@ -12,7 +12,7 @@ namespace TestingLayer
         public static MeowDbContext dbContext;
 
         [OneTimeSetUp]
-        public static void OneTimeSetUp()
+        public static async Task OneTimeSetUp()
         {
             
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
@@ -21,9 +21,9 @@ namespace TestingLayer
         }
 
         [OneTimeTearDown]
-        public static void OneTimeTearDown()
+        public static async Task OneTimeTearDown()
         {
-            dbContext.Dispose();
+            await dbContext.DisposeAsync();
         }
     }
 }
