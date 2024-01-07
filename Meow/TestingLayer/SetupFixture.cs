@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataLayer;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using System;
+
 
 namespace TestingLayer
 {
-    internal class SetupFixture
+    [SetUpFixture]
+    public static class SetupFixture
     {
+        public static MeowDbContext dbContext;
+
+        [OneTimeSetUp]
+        public static void OneTimeSetUp()
+        {
+            
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
+            builder.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            dbContext = new MeowDbContext(builder.Options);
+        }
+
+        [OneTimeTearDown]
+        public static void OneTimeTearDown()
+        {
+            dbContext.Dispose();
+        }
     }
 }
