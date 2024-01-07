@@ -1,4 +1,5 @@
 ﻿using BussinessLayer;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    internal class AircraftContext : IDb<Aircraft, int>
+    public class AircraftContext : IDb<Aircraft, int>
     {
         MeowDbContext dbContext;
         public AircraftContext(MeowDbContext dbContext_)
@@ -43,11 +44,17 @@ namespace DataLayer
             }
         }
 
-        public Aircraft Read(int key, bool useNavigationalProperties = false)
+        public async Task<Aircraft> Read(int key, bool useNavigationalProperties = false)
         {
             try
             {
-                return dbContext.Aircrafts.Find(key);
+                IQueryable<Aircraft> query = dbContext.Aircrafts;
+                if (useNavigationalProperties)
+                {
+                    query = query.Include(a => a.Brand)
+                                 .Include(a => a.Model);
+                }
+                return await query.FirstOrDefaultAsync(a => a.Id == key);
             }
             catch (Exception)
             {

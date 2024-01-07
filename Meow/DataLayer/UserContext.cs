@@ -16,7 +16,7 @@ namespace DataLayer
             this.dBContext = dBContext_;
         }
 
-        public void Create(User user)
+        public async Task Create(User user)
         {
             try
             {
