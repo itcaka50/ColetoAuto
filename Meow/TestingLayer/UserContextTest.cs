@@ -21,7 +21,7 @@ namespace TestingLayer
         {
             user = new User("Coleto", "1112", "Coleto Street", 12, "colaja@coleto.cole", "0888755832");
 
-            context.Create(user);
+            context.CreateAsync(user);
         }
 
         [TearDown]
@@ -36,65 +36,65 @@ namespace TestingLayer
         }
 
         [Test]
-        public void Create()
+        public async Task Create()
         {
             User newUser = new User("Georgi", "ColetoRules", "Coleto Street", 13, "colaja2@coleto.cole", "0889392834");
 
             int usersBefore = SetupFixture.dbContext.Users.Count();
-            context.Create(newUser);
+            context.CreateAsync(newUser);
 
             int usersAfter = SetupFixture.dbContext.Users.Count();
             Assert.IsTrue(usersBefore + 1 == usersAfter, "Create() does not work!");
         }
 
         [Test]
-        public void Read()
+        public async Task Read()
         {
-            User readUser = context.Read(user.Id);
+            User readUser = await context.ReadAsync(user.Id);
 
             Assert.AreEqual(user, readUser, "Read does not return the same object!");
         }
 
         [Test]
-        public void ReadWithNavigationalProperties()
+        public async Task ReadWithNavigationalProperties()
         {
-            User readUser = context.Read(user.Id, true);
+            User readUser = await context.ReadAsync(user.Id, true);
 
         }
 
         [Test]
-        public void ReadAll()
+        public async Task ReadAll()
         {
-            List<User> users = (List<User>)context.ReadAll();
+            List<User> users =  (List<User>) await context.ReadAllAsync();
 
             Assert.That(users.Count != 0, "ReadAll() does not return brands!");
         }
 
         [Test]
-        public void Update()
+        public async Task Update()
         {
-            User changedUser = context.Read(user.Id);
+            User changedUser = await context.ReadAsync(user.Id);
 
             changedUser.Name = "Updated " + user.Name;
             changedUser.Email = "coleto@gmail.com";
 
-            context.Update(changedUser);
+            context.UpdateAsync(changedUser);
 
             Assert.AreEqual(changedUser, user, "Update() does not work!");
         }
 
         [Test]
-        public void Delete()
+        public async Task Delete()
         {
             int usersBefore = SetupFixture.dbContext.Users.Count();
 
-            context.Delete(user.Id);
+            context.DeleteAsync(user.Id);
             int usersAfter = SetupFixture.dbContext.Users.Count();
 
             Assert.IsTrue(usersBefore - 1 == usersAfter, "Delete() does not work! 👎🏻");
         }
 
-        public void TestMethod()
+        public async Task TestMethod()
         {
             var answer = 42;
             Assert.That(answer, Is.EqualTo(42), "ERROR");
