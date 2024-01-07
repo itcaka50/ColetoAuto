@@ -8,15 +8,15 @@ namespace DataLayer
 {
     public interface IDb<T, K> where K : IConvertible
     {
-        void Create(T item);
+        Task CreateAsync(T item);
 
-        T Read(K key, bool useNavigationalProperties = false);
+        Task<T> ReadAsync(K key, bool useNavigationalProperties = false, bool isReadOnly = true);
 
-        IEnumerable<T> ReadAll(bool useNavigationalProperties = false);
+        Task<ICollection<T>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true);
 
-        void Update(T item, bool useNavigationalProperties = false);
+        Task UpdateAsync(T item, bool useNavigationalProperties = false, bool isReadOnly = true);
 
-        void Delete(K key);
+        Task DeleteAsync(K key);
 
     }
 }
