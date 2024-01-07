@@ -16,12 +16,12 @@ namespace DataLayer
             this.dBContext = dBContext_;
         }
 
-        public async Task Create(User user)
+        public async Task CreateAsync(User user)
         {
             try
             {
                 dBContext.Users.Add(user);
-                dBContext.SaveChanges();
+                await dBContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -29,13 +29,13 @@ namespace DataLayer
             }
         }
 
-        public void Delete(int key)
+        public async Task DeleteAsync(int key)
         {
             try
             {
-                User userFromDB = Read(key);
+                User userFromDB = await ReadAsync(key, false, false);
                 dBContext.Users.Remove(userFromDB);
-                dBContext.SaveChanges();
+                await dBContext.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -43,7 +43,7 @@ namespace DataLayer
             }
         }
 
-        public User Read(int key, bool useNavigationalProperties = false)
+        public async Task<User> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace DataLayer
             }
         }
 
-        public IEnumerable<User> ReadAll(bool useNavigationalProperties = false)
+        public async Task<ICollection<User>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
@@ -67,12 +67,12 @@ namespace DataLayer
             }
         }
 
-        public void Update(User item, bool useNavigationalProperties = false)
+        public async Task UpdateAsync(User item, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
                 dBContext.Users.Update(item);
-                dBContext.SaveChanges();
+                await dBContext.SaveChangesAsync();
             }
             catch (Exception)
             {

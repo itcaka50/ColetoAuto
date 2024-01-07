@@ -1,4 +1,5 @@
 ﻿using BussinessLayer;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,19 @@ namespace DataLayer
 {
     public class CarContext : IDb<Car, int>
     {
-        MeowDbContext dBContext;
+        MeowDbContext dbContext;
 
         public CarContext(MeowDbContext dBContext_)
         {
-            this.dBContext = dBContext_;
+            this.dbContext = dBContext_;
         }
 
-        public void Create(Car item)
+        public async Task CreateAsync(Car item)
         {
             try
             {
-                dBContext.Add(item);
-                dBContext.SaveChanges();
+                dbContext.Add(item);
+                dbContext.SaveChanges();
             }
             catch (Exception)
             {
@@ -29,15 +30,15 @@ namespace DataLayer
             }
         }
 
-        public void Delete(int key)
+        public async Task DeleteAsync(int key)
         {
             try
             {
-                Car carFromDb = dBContext.Cars.Find(key);
+                Car carFromDb = dbContext.Cars.Find(key);
                 if (carFromDb != null)
                 {
-                    dBContext.Cars.Remove(carFromDb);
-                    dBContext.SaveChanges();
+                    dbContext.Cars.Remove(carFromDb);
+                    dbContext.SaveChanges();
                 }
             }
             catch (Exception)
@@ -46,11 +47,20 @@ namespace DataLayer
             }
         }
 
-        public Car Read(int key, bool useNavigationalProperties = false)
+        public async Task<Car> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             try
             {
-               return dBContext.Cars.Find(key);
+                IQueryable<Car> query = dbContext.Cars;
+                if (useNavigationalProperties)
+                {
+                    if (useNavigationalProperties)
+                    {
+                        query = query.Include(b => b.Brand)
+                                     .Include(b => b.Model);
+                    }
+                }
+                return await query.FirstOrDefaultAsync(x => x.CarId == key);
             }
             catch (Exception)
             {
@@ -58,11 +68,17 @@ namespace DataLayer
             }
         }
 
-        public IEnumerable<Car> ReadAll(bool useNavigationalProperties = false)
+        public async Task<ICollection<Car>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             try
             {
-                return dBContext.Cars;
+                IQueryable<Car> query = dbContext.Cars;
+                if (useNavigationalProperties)
+                {
+                    query = query.Include(b => b.Brand)
+                                 .Include(b => b.Model);
+                }
+                return await query.ToArrayAsync();
             }
             catch (Exception)
             {
@@ -70,12 +86,23 @@ namespace DataLayer
             }
         }
 
-        public void Update(Car item, bool useNavigationalProperties = false)
+        public async Task UpdateAsync(Car item, bool useNavigationalProperties = false, bool isReadOnly = false)
         {
             try
             {
-                dBContext.Cars.Update(item);
-                dBContext.SaveChanges();
+                Car carFromDB = await ReadAsync(item.CarId, useNavigationalProperties, false);
+
+                if (carFromDB == null) { await CreateAsync(item); }
+
+                dbContext.Entry(carFromDB).CurrentValues.SetValues(item);
+
+                if (useNavigationalProperties)
+                {
+                    carFromDB.Brand = item.Brand;
+                    carFromDB.Model = item.Model;
+                }
+
+                await dbContext.SaveChangesAsync();
             }
             catch (Exception)
             {
