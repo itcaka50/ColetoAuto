@@ -17,22 +17,22 @@ namespace ServiceLayer2
             this.modelContext = modelContext;
         }
 
-        public async Task CreateAsync(Model item)
+        public async Task CreateAsync(BussinessLayer.Model item)
         {
             await modelContext.CreateAsync(item);
         }
 
-        public async Task<Model> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = true)
+        public async Task<BussinessLayer.Model> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             return await modelContext.ReadAsync(key, useNavigationalProperties, isReadOnly);
         }
 
-        public async Task<ICollection<Model>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true)
+        public async Task<ICollection<BussinessLayer.Model>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true)
         {
             return await modelContext.ReadAllAsync(useNavigationalProperties, isReadOnly);
         }
 
-        public async Task UpdateAsync(Model item, bool useNavigationalProperties = false)
+        public async Task UpdateAsync(BussinessLayer.Model item, bool useNavigationalProperties = false)
         {
             await modelContext.UpdateAsync(item, useNavigationalProperties);
         }
