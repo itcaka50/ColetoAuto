@@ -21,7 +21,7 @@ static async Task Main(string[] args)
 
         DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
         builder.UseSqlServer(
-            "Server=LAPTOP-AT94SBBO\\SQLEXPRESS;Database=Library11J;Trusted_Connection=True;"
+            "Server=.\\DEFAULTSQLSERVER\\SQLEXPRESS;Database=MeowDB;Trusted_Connection=True;Encrypt=False"
             //"Server=III-PC\\SQLEXPRESS;Database=MVCProjectTemplateDb;Trusted_Connection=True;"
             );
 
@@ -40,7 +40,7 @@ static async Task Main(string[] args)
         dbContext.Roles.Add(new IdentityRole("User") { NormalizedName = "USER" });
         await dbContext.SaveChangesAsync();
 
-        IdentityResultSet<User> result = await identityContext.CreateUserAsync("admin", "admin", "kusrhiache", 30, "admincho@abv.bg", "0888888888", Role.Administrator);
+        IdentityResultSet<User> result = await identityContext.CreateUserAsync("GoshoColov", "subuwu", "kusrhiache", 30, "colaja@abv.bg", "0888888888", Role.Administrator);
 
         Console.WriteLine("Roles added successfully!");
 
