@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,18 +10,8 @@ using System.Windows.Markup;
 
 namespace BussinessLayer
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [MinLength(3), Required]
-        public string Name { get; set; }
-
-        [Required, MinLength(7)]
-        public string Password { get; set; }
-
         [Required]
         public string Adress { get; set; }
 
@@ -28,24 +19,23 @@ namespace BussinessLayer
         public int Age { get; set; }
 
         [Required]
-        public string Email { get; set; }
-
-        [Required]
         public string Phone { get; set; }
 
-        private User()
-        {
+        public ICollection<Car> Cars { get; set; }
 
+        public User()
+        {
+            this.Cars = new List<Car>();
         }
 
-        public User(string name, string pass, string adress, int age, string email, string phone)
+        public User(string username_, string adress, int age, string email, string phone)
         {
-            Name = name;
-            Password = pass;
+            UserName = username_;
             Adress = adress;
             Age = age;
             Email = email;
             Phone = phone;
+            this.Cars = new List<Car>();
         }
     }
 }
