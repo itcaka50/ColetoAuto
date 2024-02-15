@@ -17,23 +17,16 @@ namespace BussinessLayer
         [Required]
         public string Name { get; set; }
 
-        //Vehicle
-        public Car car { get; set; }
-
-        public Aircraft aircraft { get; set; }
-
-        public Boat boat { get; set; }
-
-        [Required]
+        
         public ICollection<Model> Models { get; set; }
 
-        [Required]
+        
         public ICollection<Aircraft> Aircrafts { get; set; }
 
-        [Required]
+        
         public ICollection<Car> Cars { get; set; }
 
-        [Required]
+        
         public ICollection<Boat> Boats { get; set; }
 
         private Brand()

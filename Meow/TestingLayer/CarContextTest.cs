@@ -21,7 +21,7 @@ namespace TestingLayer
         public async Task Setup()
         {
             Model slr = new Model("SLR", mcLaren.BrandId);
-            car = new Car(mcLaren, slr, 300000, 3000, DateOnly.MaxValue, 650, "izbuhva");
+            car = new Car(mcLaren, slr, 300000, 3000, 650, "izbuhva");
 
             context.CreateAsync(car);
         }
@@ -41,7 +41,7 @@ namespace TestingLayer
         [Test]
         public async Task Create()
         {
-            Car testAuto = new(mcLaren, slr, 300000, 3000, DateOnly.MaxValue, 350, "izbuhva bavno");
+            Car testAuto = new(mcLaren, slr, 300000, 3000, 350, "izbuhva bavno");
 
             int carsBefore = SetupFixture.dbContext.Cars.Count();
 

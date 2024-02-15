@@ -37,9 +37,6 @@ namespace BussinessLayer
         public int Mileage { get; set; }
 
         [Required]
-        public DateOnly DateOfProduction { get; set; }
-
-        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "HorsePower should be greater than 0!")]
         public int HorsePower { get; set; }
 
@@ -57,13 +54,12 @@ namespace BussinessLayer
 
         }
 
-        public Car(Brand brand_, Model model_, double price_, int mileage_, DateOnly dateOfProduction_, int horsePower_, string description_)
+        public Car(Brand brand_, Model model_, double price_, int mileage_, int horsePower_, string description_)
         {
             this.Brand = brand_;
             this.Model = model_;
             this.Price = price_;
             this.Mileage = mileage_;
-            this.DateOfProduction = dateOfProduction_;
             this.HorsePower = horsePower_;
             this.Description = description_;
         }

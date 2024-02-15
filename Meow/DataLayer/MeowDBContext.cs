@@ -25,7 +25,7 @@ namespace DataLayer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\DEFAULTSQLSERVER\\SQLEXPRESS;Database=MeowDB;Trusted_Connection=True;Encrypt=False");
+                optionsBuilder.UseSqlServer("Server=.\\DEFAULTSQLSERVER;Database=MeowDB2;Trusted_Connection=True;Encrypt=False");
             }
             base.OnConfiguring(optionsBuilder);
         }
