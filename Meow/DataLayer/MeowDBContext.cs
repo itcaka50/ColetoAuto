@@ -1,4 +1,5 @@
 ﻿using BussinessLayer;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class MeowDbContext : DbContext
+    public class MeowDbContext : IdentityDbContext<User>
     {
         public MeowDbContext() : base()
         {
@@ -34,7 +35,7 @@ namespace DataLayer
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         public DbSet<Car> Cars { get; set; }
 

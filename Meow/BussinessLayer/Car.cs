@@ -37,7 +37,7 @@ namespace BussinessLayer
         public int Mileage { get; set; }
 
         [Required]
-        DateOnly DateOfProduction { get; set; }
+        public DateOnly DateOfProduction { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "HorsePower should be greater than 0!")]
@@ -46,6 +46,11 @@ namespace BussinessLayer
         [Required]
         [MaxLength(1000)]
         public string Description { get; set; }
+
+        //Zashto nqmame useri kum car we brat?
+        public User User_ { get; set; }
+
+        public string UserId { get; set; }
 
         private Car() 
         {
