@@ -36,8 +36,6 @@ namespace DataLayer
             base.OnModelCreating(modelBuilder);
         }
 
-        //public DbSet<User> Users { get; set; }
-
         public DbSet<Car> Cars { get; set; }
 
         public DbSet<Aircraft> Aircrafts { get; set; }
