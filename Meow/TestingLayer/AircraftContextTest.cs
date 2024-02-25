@@ -43,11 +43,11 @@ namespace TestingLayer
         {
             Aircraft testAircraft = new(1, 1, "aaa", brand.BrandId, model.ModelId);
 
-            int arcraftsBefore = SetupFixture.dbContext.Aircrafts.Count();
+            int arcraftsBefore = SetupFixture.dbContext.Users.Count();
 
             await context.CreateAsync(testAircraft);
 
-            int aircraftsAfter = SetupFixture.dbContext.Aircrafts.Count();
+            int aircraftsAfter = SetupFixture.dbContext.Users.Count();
 
             Assert.That(arcraftsBefore + 1 == aircraftsAfter, "Create() does not work!");
         }
@@ -87,10 +87,10 @@ namespace TestingLayer
         [Test]
         public async Task Delete()
         {
-            int aircraftsBefore = SetupFixture.dbContext.Aircrafts.Count();
+            int aircraftsBefore = SetupFixture.dbContext.Users.Count();
 
             await context.DeleteAsync(aircraft.Id);
-            int aircraftsAfter = SetupFixture.dbContext.Aircrafts.Count();
+            int aircraftsAfter = SetupFixture.dbContext.Users.Count();
 
             Assert.IsTrue(aircraftsBefore - 1 == aircraftsAfter, "Delete() does not work!");
         }
