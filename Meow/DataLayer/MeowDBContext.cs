@@ -32,6 +32,7 @@ namespace DataLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Aircraft>
             base.OnModelCreating(modelBuilder);
         }
 
