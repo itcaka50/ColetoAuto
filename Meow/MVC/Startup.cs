@@ -24,7 +24,7 @@ namespace MVC
             services.AddRazorPages();
             services.AddDbContext<MeowDbContext>(op =>
             {
-                op.UseSqlServer("Server=TIMI-PC;Database=BiteBlissDB;Trusted_Connection=True;Encrypt=False");
+                op.UseSqlServer("Server=.\\DEFAULTSQLSERVER;Database=MeowDB2;Trusted_Connection=True;Encrypt=False");
             }, ServiceLifetime.Scoped);
             services.AddScoped<AircraftContext, AircraftContext>();
             services.AddScoped<BoatContext, BoatContext>();

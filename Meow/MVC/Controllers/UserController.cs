@@ -1,5 +1,6 @@
 ﻿using BussinessLayer;
 using DataLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -46,11 +47,12 @@ namespace MVC.Controllers
             return View();
         }
 
-        
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserName, Adress, Age, Email, Phone")] User user)
         {
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 _context.Add(user);
@@ -76,7 +78,7 @@ namespace MVC.Controllers
             return View(aircraft);
         }
 
-
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("UserName, Adress, Age, Email, Phone")] User user)
@@ -85,7 +87,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 try
@@ -127,7 +129,7 @@ namespace MVC.Controllers
             return View(user);
         }
 
-
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

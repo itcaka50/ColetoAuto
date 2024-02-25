@@ -61,6 +61,7 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Price,Thrust,Description,BrandIdF,ModelIdF")] Aircraft aircraft)
         {
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 _context.Add(aircraft);
@@ -101,7 +102,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 try

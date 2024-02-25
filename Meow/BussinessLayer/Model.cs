@@ -32,7 +32,7 @@ namespace BussinessLayer
       
         public ICollection<Car> Cars { get; set; }
 
-        private Model() 
+        public Model() 
         {
             Aircrafts = new List<Aircraft>();
             Boats = new List<Boat>();

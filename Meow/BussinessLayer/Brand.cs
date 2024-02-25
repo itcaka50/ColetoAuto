@@ -29,7 +29,7 @@ namespace BussinessLayer
         
         public ICollection<Boat> Boats { get; set; }
 
-        private Brand()
+        public Brand()
         {
             this.Models = new List<Model>();
             this.Aircrafts = new List<Aircraft>();
