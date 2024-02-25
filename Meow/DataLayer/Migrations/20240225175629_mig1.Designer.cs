@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(MeowDbContext))]
-    [Migration("20240215175815_barona")]
-    partial class barona
+    [Migration("20240225175629_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -395,7 +395,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Aircrafts")
+                        .WithMany()
                         .HasForeignKey("ModelIdF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -414,7 +414,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Boats")
+                        .WithMany()
                         .HasForeignKey("ModelIdF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -433,7 +433,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Cars")
+                        .WithMany()
                         .HasForeignKey("ModelIdF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -522,15 +522,6 @@ namespace DataLayer.Migrations
                     b.Navigation("Cars");
 
                     b.Navigation("Models");
-                });
-
-            modelBuilder.Entity("BussinessLayer.Model", b =>
-                {
-                    b.Navigation("Aircrafts");
-
-                    b.Navigation("Boats");
-
-                    b.Navigation("Cars");
                 });
 
             modelBuilder.Entity("BussinessLayer.User", b =>

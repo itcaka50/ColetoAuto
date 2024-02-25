@@ -22,12 +22,6 @@ namespace BussinessLayer
         public Brand Brand { get; set; }
 
 
-        [ForeignKey("Model")]
-        public int ModelIdF { get; set; }
-
-        [Required]
-        public Model Model { get; set; }
-
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Price should be greater than 0!")]
         public double Price { get; set; }
@@ -44,7 +38,7 @@ namespace BussinessLayer
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        //Zashto nqmame useri kum car we brat?
+        
         public User User_ { get; set; }
 
         public string UserId { get; set; }
@@ -54,10 +48,9 @@ namespace BussinessLayer
 
         }
 
-        public Car(Brand brand_, Model model_, double price_, int mileage_, int horsePower_, string description_)
+        public Car(Brand brand_,double price_, int mileage_, int horsePower_, string description_)
         {
             this.Brand = brand_;
-            this.Model = model_;
             this.Price = price_;
             this.Mileage = mileage_;
             this.HorsePower = horsePower_;

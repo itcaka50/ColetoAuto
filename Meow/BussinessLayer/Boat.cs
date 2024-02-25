@@ -26,24 +26,19 @@ namespace BussinessLayer
         [ForeignKey("Brand")]
         public int BrandIdF { get; set; }
 
-        public Brand Brand { get; set; }
+        public Brand brand { get; set; }
 
-        [ForeignKey("Model")]
-        public int ModelIdF { get; set; }
-
-        public Model Model { get; set; }
 
         private Boat()
         {
                 
         }
-        public Boat(double price, int hp, string description, int brandId, int ModelId)
+        public Boat(double price, int hp, string description, Brand brand_)
         {
             Price = price;
             Hp = hp;
             Description = description;
-            BrandIdF = brandId;
-            ModelIdF = ModelId;
+            brand = brand_;
         }
     }
 }

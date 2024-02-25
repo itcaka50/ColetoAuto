@@ -393,7 +393,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Aircrafts")
+                        .WithMany()
                         .HasForeignKey("ModelIdF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -412,7 +412,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Boats")
+                        .WithMany()
                         .HasForeignKey("ModelIdF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -431,7 +431,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Cars")
+                        .WithMany()
                         .HasForeignKey("ModelIdF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -520,15 +520,6 @@ namespace DataLayer.Migrations
                     b.Navigation("Cars");
 
                     b.Navigation("Models");
-                });
-
-            modelBuilder.Entity("BussinessLayer.Model", b =>
-                {
-                    b.Navigation("Aircrafts");
-
-                    b.Navigation("Boats");
-
-                    b.Navigation("Cars");
                 });
 
             modelBuilder.Entity("BussinessLayer.User", b =>

@@ -27,25 +27,19 @@ namespace BussinessLayer
         [ForeignKey("Brand")]
         public int BrandIdF { get; set; }
 
-        public Brand Brand { get; set; }
-
-        [ForeignKey("Model")]
-        public int ModelIdF { get; set; }
-
-        public Model Model { get; set; }
+        public Brand brand { get; set; }
 
         private Aircraft()
         {
                 
         }
 
-        public Aircraft(double price, int thrust, string description, int brandId, int ModelId)
+        public Aircraft(double price, int thrust, string description, Brand brand_)
         {
             Price = price;
             Thrust = thrust;
             Description = description;
-            BrandIdF = brandId;
-            ModelIdF = ModelId;
+            brand = brand_;
         }
     }
 }

@@ -49,6 +49,7 @@ namespace MVC.Controllers
         // GET: Models/Create
         public IActionResult Create()
         {
+            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name");
             return View();
         }
 

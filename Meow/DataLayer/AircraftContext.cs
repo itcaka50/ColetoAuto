@@ -51,8 +51,8 @@ namespace DataLayer
                 IQueryable<Aircraft> query = dbContext.Aircrafts;
                 if (useNavigationalProperties)
                 {
-                    query = query.Include(a => a.Brand)
-                                 .Include(a => a.Model);
+                    query = query.Include(a => a.brand);
+                                 
                 }
                 return await query.FirstOrDefaultAsync(a => a.Id == key);
             }
@@ -86,8 +86,7 @@ namespace DataLayer
 
                 if (useNavigationalProperties)
                 {
-                    aircraftFromDB.Brand = item.Brand;
-                    aircraftFromDB.Model = item.Model;
+                    aircraftFromDB.brand = item.brand;
                 }
 
                 await dbContext.SaveChangesAsync();

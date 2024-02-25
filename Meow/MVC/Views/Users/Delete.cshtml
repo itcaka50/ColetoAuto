@@ -1,4 +1,4 @@
-﻿@model BusinessLayer.User
+﻿@model BussinessLayer.User
 
 @{
     ViewData["Title"] = "Delete";
@@ -30,13 +30,13 @@
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Recipes)
+            @Html.DisplayNameFor(model => model.Cars)
         </dt>
         <dd class="col-sm-10">
             @{
                 string data = "";
                 foreach (var i in Model.Cars)
-                    data += i.Title + ", ";
+                    data += i.Brand + " " + i.Model + ", ";
             }
             @data
         </dd>

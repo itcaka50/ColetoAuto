@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataLayer.Migrations
 {
-    public partial class barona : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -211,13 +211,13 @@ namespace DataLayer.Migrations
                         column: x => x.BrandIdF,
                         principalTable: "Brands",
                         principalColumn: "BrandId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Aircrafts_Models_ModelIdF",
                         column: x => x.ModelIdF,
                         principalTable: "Models",
                         principalColumn: "ModelId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,13 +240,13 @@ namespace DataLayer.Migrations
                         column: x => x.BrandIdF,
                         principalTable: "Brands",
                         principalColumn: "BrandId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boats_Models_ModelIdF",
                         column: x => x.ModelIdF,
                         principalTable: "Models",
                         principalColumn: "ModelId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -277,13 +277,13 @@ namespace DataLayer.Migrations
                         column: x => x.BrandIdF,
                         principalTable: "Brands",
                         principalColumn: "BrandId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cars_Models_ModelIdF",
                         column: x => x.ModelIdF,
                         principalTable: "Models",
                         principalColumn: "ModelId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

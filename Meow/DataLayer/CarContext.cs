@@ -56,8 +56,8 @@ namespace DataLayer
                 {
                     if (useNavigationalProperties)
                     {
-                        query = query.Include(b => b.Brand)
-                                     .Include(b => b.Model);
+                        query = query.Include(b => b.Brand);
+                                     
                     }
                 }
                 return await query.FirstOrDefaultAsync(x => x.CarId == key);
@@ -75,8 +75,8 @@ namespace DataLayer
                 IQueryable<Car> query = dbContext.Cars;
                 if (useNavigationalProperties)
                 {
-                    query = query.Include(b => b.Brand)
-                                 .Include(b => b.Model);
+                    query = query.Include(b => b.Brand);
+                                 
                 }
                 return await query.ToArrayAsync();
             }
@@ -99,7 +99,6 @@ namespace DataLayer
                 if (useNavigationalProperties)
                 {
                     carFromDB.Brand = item.Brand;
-                    carFromDB.Model = item.Model;
                 }
 
                 await dbContext.SaveChangesAsync();
