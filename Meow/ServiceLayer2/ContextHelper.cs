@@ -15,7 +15,7 @@ namespace ServiceLayer2
         private static BrandContext brandContext;
         private static CarContext carContext;
         private static ModelContext modelContext;
-        private static UserContext userContext;
+        private static IdentityContext identityContext;
 
 
         public static MeowDbContext GetDbContext()
@@ -93,20 +93,6 @@ namespace ServiceLayer2
             modelContext = new ModelContext(GetDbContext());
         }
 
-        public static UserContext GetUserContext()
-        {
-            if (userContext == null)
-            {
-                SetUserContext();
-            }
-
-            return userContext;
-        }
-
-        public static void SetUserContext()
-        {
-            userContext = new UserContext(GetDbContext());
-        }
 
         public static CarContext GetCarContext()
         {

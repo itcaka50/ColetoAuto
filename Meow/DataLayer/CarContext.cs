@@ -1,4 +1,5 @@
 ﻿using BussinessLayer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -56,8 +57,8 @@ namespace DataLayer
                 {
                     if (useNavigationalProperties)
                     {
-                        query = query.Include(b => b.Brand);
-                                     
+                        query = query.Include(b => b.@Model);
+                        query = query.Include(b => b.UserId);      
                     }
                 }
                 return await query.FirstOrDefaultAsync(x => x.CarId == key);
@@ -75,8 +76,8 @@ namespace DataLayer
                 IQueryable<Car> query = dbContext.Cars;
                 if (useNavigationalProperties)
                 {
-                    query = query.Include(b => b.Brand);
-                                 
+                    query = query.Include(b => b.@Model);
+                    query = query.Include(b => b.UserId);           
                 }
                 return await query.ToArrayAsync();
             }
@@ -98,7 +99,8 @@ namespace DataLayer
 
                 if (useNavigationalProperties)
                 {
-                    carFromDB.Brand = item.Brand;
+                    carFromDB.@Model = item.@Model;
+                    carFromDB.UserId = item.UserId;
                 }
 
                 await dbContext.SaveChangesAsync();

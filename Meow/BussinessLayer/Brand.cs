@@ -20,28 +20,16 @@ namespace BussinessLayer
         
         public ICollection<Model> Models { get; set; }
 
-        
-        public ICollection<Aircraft> Aircrafts { get; set; }
-
-        
-        public ICollection<Car> Cars { get; set; }
-
-        
-        public ICollection<Boat> Boats { get; set; }
 
         public Brand()
         {
-            this.Models = new List<Model>();
-            this.Aircrafts = new List<Aircraft>();
-            this.Boats = new List<Boat>();
+           
         }
         
         public Brand(string name_)
         {
             this.Name = name_;
             this.Models = new List<Model>();
-            this.Aircrafts = new List<Aircraft>();
-            this.Boats = new List<Boat>();
         }
     }
 }

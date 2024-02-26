@@ -21,18 +21,27 @@ namespace BussinessLayer
         [ForeignKey("Brand")]
         public int BrandIdF { get; set; }
 
-        public Brand brand { get; set; }
+        public Brand @Brand { get; set; }
 
+        public ICollection<Aircraft> Aircrafts { get; set; }
+        public ICollection<Boat> Boats { get; set; }
+        public ICollection<Car> Cars {  get; set; }
         
 
         public Model() 
         {
+            Aircrafts = new List<Aircraft>();
+            Boats = new List<Boat>();
+            Cars = new List<Car>();
         }
 
         public Model(string name, Brand brand_)
         {
             Name = name;
-            brand = brand_;
+            @Brand = brand_;
+            Aircrafts = new List<Aircraft>();
+            Boats = new List<Boat>();
+            Cars = new List<Car>();
         }
 
     }

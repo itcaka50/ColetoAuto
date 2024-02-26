@@ -24,22 +24,28 @@ namespace BussinessLayer
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        [ForeignKey("Brand")]
-        public int BrandIdF { get; set; }
+        [ForeignKey("Model")]
+        public int ModelId { get; set; }
 
-        public Brand brand { get; set; }
+        public Model @Model { get; set; }
+
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
+        public User @User { get; set; }
 
         private Aircraft()
         {
                 
         }
 
-        public Aircraft(double price, int thrust, string description, Brand brand_)
+        public Aircraft(double price, int thrust, string description, Model model_, User user_)
         {
             Price = price;
             Thrust = thrust;
             Description = description;
-            brand = brand_;
+            @Model = model_;
+            @User = user_;
         }
     }
 }

@@ -15,11 +15,11 @@ namespace BussinessLayer
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CarId { get; set; }
 
-        [ForeignKey("Brand")]
-        public int BrandIdF { get; set; }
+        [ForeignKey("Model")]
+        public int ModelId { get; set; }
 
         [Required]
-        public Brand Brand { get; set; }
+        public Model @Model { get; set; }
 
 
         [Required]
@@ -48,9 +48,9 @@ namespace BussinessLayer
 
         }
 
-        public Car(Brand brand_,double price_, int mileage_, int horsePower_, string description_)
+        public Car(Model model_,double price_, int mileage_, int horsePower_, string description_)
         {
-            this.Brand = brand_;
+            this.@Model = model_;
             this.Price = price_;
             this.Mileage = mileage_;
             this.HorsePower = horsePower_;

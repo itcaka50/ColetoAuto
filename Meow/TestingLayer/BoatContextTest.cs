@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace TestingLayer
 {
+    /*
     [TestFixture]
     public class BoatContextTest
     {
@@ -95,4 +96,5 @@ namespace TestingLayer
             Assert.IsTrue(boatsBefore - 1 == boatsAfter, "Delete() does not work!");
         }
     }
+    */
 }

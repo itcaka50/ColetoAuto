@@ -22,7 +22,7 @@ namespace MVC.Controllers
         // GET: Aircraft
         public async Task<IActionResult> Index()
         {
-            var meowDbContext = _context.Aircrafts.Include(a => a.Brand).Include(a => a.Model);
+            var meowDbContext = _context.Aircrafts.Include(a => a.@Model);
             return View(await meowDbContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace MVC.Controllers
             }
 
             var aircraft = await _context.Aircrafts
-                .Include(a => a.Brand)
                 .Include(a => a.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aircraft == null)
@@ -68,8 +67,7 @@ namespace MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", aircraft.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Brands, "ModelId", "Name", aircraft.ModelId);
             return View(aircraft);
         }
 
@@ -86,8 +84,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", aircraft.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelId);
             return View(aircraft);
         }
 
@@ -123,8 +120,7 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", aircraft.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelId);
             return View(aircraft);
         }
 
@@ -137,7 +133,6 @@ namespace MVC.Controllers
             }
 
             var aircraft = await _context.Aircrafts
-                .Include(a => a.Brand)
                 .Include(a => a.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aircraft == null)

@@ -121,7 +121,15 @@ namespace DataLayer
                 }
                 else
                 {
-                    return await context.Users.Include(u => u.Cars).SingleOrDefaultAsync(u => u.Id == key);
+                    IQueryable<User> query = context.Users;
+                    if (useNavigationalProperties)
+                    {
+                        query = query.Include(b => b.Cars);
+                        query = query.Include(b => b.Aircrafts);
+                        query = query.Include(b => b.Boats);
+
+                    }
+                    return await query.FirstOrDefaultAsync();
                 }
             }
             catch (Exception)

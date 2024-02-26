@@ -22,10 +22,14 @@ namespace BussinessLayer
         public string Phone { get; set; }
 
         public ICollection<Car> Cars { get; set; }
+        public ICollection<Boat> Boats { get; set; }
+        public ICollection<Aircraft> Aircrafts { get; set; }
 
         public User()
         {
             this.Cars = new List<Car>();
+            this.Aircrafts = new List<Aircraft>();
+            this.Boats = new List<Boat>();
         }
 
         public User(string username_, string adress, int age, string email, string phone)
@@ -36,6 +40,8 @@ namespace BussinessLayer
             Email = email;
             Phone = phone;
             this.Cars = new List<Car>();
+            this.Aircrafts = new List<Aircraft>();
+            this.Boats = new List<Boat>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BussinessLayer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,8 @@ namespace DataLayer
                 IQueryable<Aircraft> query = dbContext.Aircrafts;
                 if (useNavigationalProperties)
                 {
-                    query = query.Include(a => a.brand);
-                                 
+                    query = query.Include(a => a.@Model);
+                    query = query.Include(a => a.@User);
                 }
                 return await query.FirstOrDefaultAsync(a => a.Id == key);
             }
@@ -66,7 +67,13 @@ namespace DataLayer
         {
             try
             {
-                return dbContext.Aircrafts.ToList();
+                IQueryable<Aircraft> query = dbContext.Aircrafts;
+                if (useNavigationalProperties)
+                {
+                    query = query.Include(b => b.@Model);
+                    query = query.Include(b => b.@User);
+                }
+                return await query.ToArrayAsync();
             }
             catch (Exception)
             {
@@ -86,7 +93,8 @@ namespace DataLayer
 
                 if (useNavigationalProperties)
                 {
-                    aircraftFromDB.brand = item.brand;
+                    aircraftFromDB.@Model = item.@Model;
+                    aircraftFromDB.@User = item.User;
                 }
 
                 await dbContext.SaveChangesAsync();
