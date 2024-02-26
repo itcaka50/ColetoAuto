@@ -13,20 +13,7 @@ namespace BussinessLayer
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CarId { get; set; }
-
-        [ForeignKey("Brand")]
-        public int BrandIdF { get; set; }
-
-        [Required]
-        public Brand Brand { get; set; }
-
-
-        [ForeignKey("Model")]
-        public int ModelIdF { get; set; }
-
-        [Required]
-        public Model Model { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Price should be greater than 0!")]
@@ -44,24 +31,30 @@ namespace BussinessLayer
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        //Zashto nqmame useri kum car we brat?
-        public User User_ { get; set; }
-
+        [ForeignKey("User")]
         public string UserId { get; set; }
 
-        private Car() 
+        public User @User { get; set; }
+        
+        [ForeignKey("Model")]
+        public int ModelId { get; set; }
+
+        [Required]
+        public Model @Model { get; set; }
+
+        public Car() 
         {
 
         }
 
-        public Car(Brand brand_, Model model_, double price_, int mileage_, int horsePower_, string description_)
+        public Car(double price_, int mileage_, int horsePower_, string description_, Model model_, User user_)
         {
-            this.Brand = brand_;
-            this.Model = model_;
             this.Price = price_;
             this.Mileage = mileage_;
             this.HorsePower = horsePower_;
             this.Description = description_;
+            this.@Model = model_;
+            this.@User = user_;
         }
     }
 }

@@ -20,7 +20,15 @@ namespace MVC.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
+            var models = _context.Models.Include(x => x.Brand);
             var svetomirDbContext = _context.Users.Include(r => r.Cars);
+            foreach (var user_ in svetomirDbContext)
+            {
+                foreach (Car c in user_.Cars)
+                {
+                    c.Model = models.First(x => x.Id == c.ModelId);
+                }
+            }
             return View(await svetomirDbContext.ToListAsync());
         }
 

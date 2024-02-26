@@ -1,4 +1,4 @@
-﻿@model BusinessLayer.User
+﻿@model BussinessLayer.User
 
 @{
     ViewData["Title"] = "Details";
@@ -46,8 +46,8 @@
         <dd class="col-sm-10">
             @{
                 string data = "";
-                foreach (var i in item.Cars)
-                    data += i.Brand + " " + i.Model + ", ";
+                foreach (var i in Model.Cars)
+                    data += i.Model.Brand.Name + " " + i.Model.Name + ", ";
             }
             @data
         </dd>

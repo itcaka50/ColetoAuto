@@ -22,7 +22,7 @@ namespace MVC.Controllers
         // GET: Aircraft
         public async Task<IActionResult> Index()
         {
-            var meowDbContext = _context.Aircrafts.Include(a => a.Brand).Include(a => a.Model);
+            var meowDbContext = _context.Aircrafts.Include(a => a.Model);
             return View(await meowDbContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace MVC.Controllers
             }
 
             var aircraft = await _context.Aircrafts
-                .Include(a => a.Brand)
                 .Include(a => a.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aircraft == null)
@@ -49,8 +48,7 @@ namespace MVC.Controllers
         // GET: Aircraft/Create
         public IActionResult Create()
         {
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name");
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name");
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Price,Thrust,Description,BrandIdF,ModelIdF")] Aircraft aircraft)
+        public async Task<IActionResult> Create([Bind("Id,Price,Thrust,Description,ModelId")] Aircraft aircraft)
         {
             ModelState.Clear();
             if (ModelState.IsValid)
@@ -68,8 +66,7 @@ namespace MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", aircraft.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", aircraft.ModelId);
             return View(aircraft);
         }
 
@@ -86,8 +83,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", aircraft.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", aircraft.ModelId);
             return View(aircraft);
         }
 
@@ -96,7 +92,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Thrust,Description,BrandIdF,ModelIdF")] Aircraft aircraft)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Thrust,Description,ModelId")] Aircraft aircraft)
         {
             if (id != aircraft.Id)
             {
@@ -123,21 +119,19 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", aircraft.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", aircraft.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", aircraft.ModelId);
             return View(aircraft);
         }
 
         // GET: Aircraft/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Aircrafts == null)
             {
                 return NotFound();
             }
 
             var aircraft = await _context.Aircrafts
-                .Include(a => a.Brand)
                 .Include(a => a.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aircraft == null)
@@ -153,14 +147,14 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Users == null)
+            if (_context.Aircrafts == null)
             {
                 return Problem("Entity set 'MeowDbContext.Aircrafts'  is null.");
             }
-            var aircraft = await _context.Users.FindAsync(id);
+            var aircraft = await _context.Aircrafts.FindAsync(id);
             if (aircraft != null)
             {
-                _context.Users.Remove(aircraft);
+                _context.Aircrafts.Remove(aircraft);
             }
             
             await _context.SaveChangesAsync();

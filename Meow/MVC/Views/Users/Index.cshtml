@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BusinessLayer.User>
+﻿@model IEnumerable<BussinessLayer.User>
 
 @{
     ViewData["Title"] = "Index";
@@ -53,10 +53,14 @@
                 <td>
                     @{
                         string data = "";
-                        foreach (var i in item.Cars)
-                            data += i.Brand + " " + i.Model + ", ";
+                        foreach (var car in item.Cars)
+                        {
+                            
+                            data = car.Model.Brand.Name + " " + car.Model.Name;
+                            <p>@data <br></p>
+                        }
+                            
                     }
-                    @data
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(MeowDbContext))]
-    [Migration("20240215175815_barona")]
-    partial class barona
+    [Migration("20240226112542_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,15 +32,12 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BrandIdF")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("ModelIdF")
+                    b.Property<int>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -51,9 +48,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandIdF");
-
-                    b.HasIndex("ModelIdF");
+                    b.HasIndex("ModelId");
 
                     b.ToTable("Aircrafts");
                 });
@@ -66,9 +61,6 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BrandIdF")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -77,7 +69,7 @@ namespace DataLayer.Migrations
                     b.Property<int>("Hp")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModelIdF")
+                    b.Property<int>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -85,40 +77,35 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandIdF");
-
-                    b.HasIndex("ModelIdF");
+                    b.HasIndex("ModelId");
 
                     b.ToTable("Boats");
                 });
 
             modelBuilder.Entity("BussinessLayer.Brand", b =>
                 {
-                    b.Property<int>("BrandId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BrandId");
+                    b.HasKey("Id");
 
                     b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("BussinessLayer.Car", b =>
                 {
-                    b.Property<int>("CarId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"), 1L, 1);
-
-                    b.Property<int>("BrandIdF")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -131,7 +118,7 @@ namespace DataLayer.Migrations
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModelIdF")
+                    b.Property<int>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -141,11 +128,9 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CarId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("BrandIdF");
-
-                    b.HasIndex("ModelIdF");
+                    b.HasIndex("ModelId");
 
                     b.HasIndex("UserId");
 
@@ -154,23 +139,20 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("BussinessLayer.Model", b =>
                 {
-                    b.Property<int>("ModelId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModelId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BrandIdF")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ModelId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
@@ -388,78 +370,54 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("BussinessLayer.Aircraft", b =>
                 {
-                    b.HasOne("BussinessLayer.Brand", "Brand")
-                        .WithMany("Aircrafts")
-                        .HasForeignKey("BrandIdF")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Aircrafts")
-                        .HasForeignKey("ModelIdF")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Brand");
 
                     b.Navigation("Model");
                 });
 
             modelBuilder.Entity("BussinessLayer.Boat", b =>
                 {
-                    b.HasOne("BussinessLayer.Brand", "Brand")
-                        .WithMany("Boats")
-                        .HasForeignKey("BrandIdF")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Boats")
-                        .HasForeignKey("ModelIdF")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Brand");
 
                     b.Navigation("Model");
                 });
 
             modelBuilder.Entity("BussinessLayer.Car", b =>
                 {
-                    b.HasOne("BussinessLayer.Brand", "Brand")
-                        .WithMany("Cars")
-                        .HasForeignKey("BrandIdF")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BussinessLayer.Model", "Model")
-                        .WithMany("Cars")
-                        .HasForeignKey("ModelIdF")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BussinessLayer.User", "User_")
+                    b.HasOne("BussinessLayer.User", "User")
                         .WithMany("Cars")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Brand");
-
                     b.Navigation("Model");
 
-                    b.Navigation("User_");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BussinessLayer.Model", b =>
                 {
-                    b.HasOne("BussinessLayer.Brand", "brand")
+                    b.HasOne("BussinessLayer.Brand", "Brand")
                         .WithMany("Models")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("brand");
+                    b.Navigation("Brand");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -515,22 +473,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("BussinessLayer.Brand", b =>
                 {
-                    b.Navigation("Aircrafts");
-
-                    b.Navigation("Boats");
-
-                    b.Navigation("Cars");
-
                     b.Navigation("Models");
-                });
-
-            modelBuilder.Entity("BussinessLayer.Model", b =>
-                {
-                    b.Navigation("Aircrafts");
-
-                    b.Navigation("Boats");
-
-                    b.Navigation("Cars");
                 });
 
             modelBuilder.Entity("BussinessLayer.User", b =>

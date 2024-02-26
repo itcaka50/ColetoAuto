@@ -22,7 +22,7 @@ namespace MVC.Controllers
         // GET: Boats
         public async Task<IActionResult> Index()
         {
-            var meowDbContext = _context.Boats.Include(b => b.Brand).Include(b => b.Model);
+            var meowDbContext = _context.Boats.Include(b => b.Model);
             return View(await meowDbContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace MVC.Controllers
             }
 
             var boat = await _context.Boats
-                .Include(b => b.Brand)
                 .Include(b => b.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (boat == null)
@@ -49,8 +48,7 @@ namespace MVC.Controllers
         // GET: Boats/Create
         public IActionResult Create()
         {
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name");
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name");
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Price,Hp,Description,BrandIdF,ModelIdF")] Boat boat)
+        public async Task<IActionResult> Create([Bind("Id,Price,Hp,Description,ModelId")] Boat boat)
         {
             ModelState.Clear();
             if (ModelState.IsValid)
@@ -68,8 +66,7 @@ namespace MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", boat.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", boat.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", boat.ModelId);
             return View(boat);
         }
 
@@ -86,8 +83,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", boat.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", boat.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", boat.ModelId);
             return View(boat);
         }
 
@@ -96,7 +92,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Hp,Description,BrandIdF,ModelIdF")] Boat boat)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Hp,Description,ModelId")] Boat boat)
         {
             if (id != boat.Id)
             {
@@ -123,8 +119,7 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", boat.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", boat.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", boat.ModelId);
             return View(boat);
         }
 
@@ -137,7 +132,6 @@ namespace MVC.Controllers
             }
 
             var boat = await _context.Boats
-                .Include(b => b.Brand)
                 .Include(b => b.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (boat == null)

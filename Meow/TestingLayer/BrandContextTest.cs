@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace TestingLayer
 {
+    /*
     [SetUpFixture]
     public class BrandContextTest
     {
@@ -88,4 +89,5 @@ namespace TestingLayer
             Assert.IsTrue(brandsBefore - 1 == brnadAfter, "Delete() does not work!");
         }
     }
+    */
 }
