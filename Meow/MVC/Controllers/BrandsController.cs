@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BussinessLayer;
 using DataLayer;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers
 {
@@ -37,7 +36,7 @@ namespace MVC.Controllers
             }
 
             var brand = await _context.Brands
-                .FirstOrDefaultAsync(m => m.BrandId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (brand == null)
             {
                 return NotFound();
@@ -55,10 +54,9 @@ namespace MVC.Controllers
         // POST: Brands/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BrandId,Name")] Brand brand)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Brand brand)
         {
             ModelState.Clear();
             if (ModelState.IsValid)
@@ -89,12 +87,11 @@ namespace MVC.Controllers
         // POST: Brands/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BrandId,Name")] Brand brand)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Brand brand)
         {
-            if (id != brand.BrandId)
+            if (id != brand.Id)
             {
                 return NotFound();
             }
@@ -108,7 +105,7 @@ namespace MVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BrandExists(brand.BrandId))
+                    if (!BrandExists(brand.Id))
                     {
                         return NotFound();
                     }
@@ -131,7 +128,7 @@ namespace MVC.Controllers
             }
 
             var brand = await _context.Brands
-                .FirstOrDefaultAsync(m => m.BrandId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (brand == null)
             {
                 return NotFound();
@@ -141,7 +138,6 @@ namespace MVC.Controllers
         }
 
         // POST: Brands/Delete/5
-        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -162,7 +158,7 @@ namespace MVC.Controllers
 
         private bool BrandExists(int id)
         {
-          return (_context.Brands?.Any(e => e.BrandId == id)).GetValueOrDefault();
+          return (_context.Brands?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

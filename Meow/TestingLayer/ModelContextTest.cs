@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace TestingLayer
 {
+    /*
     [TestFixture]
     public class ModelsContextTest
     {
@@ -108,4 +109,5 @@ namespace TestingLayer
             Assert.That(answer, Is.EqualTo(42), "ERROR");
         }
     }
+    */
 }

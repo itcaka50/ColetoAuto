@@ -23,27 +23,22 @@ namespace BussinessLayer
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        [ForeignKey("Brand")]
-        public int BrandIdF { get; set; }
-
-        public Brand Brand { get; set; }
-
         [ForeignKey("Model")]
-        public int ModelIdF { get; set; }
+        public int ModelId { get; set; }
 
-        public Model Model { get; set; }
+        [Required]
+        public Model @Model { get; set; }
 
-        private Boat()
+        public Boat()
         {
                 
         }
-        public Boat(double price, int hp, string description, int brandId, int ModelId)
+        public Boat(double price, int hp, string description, Model model_)
         {
-            Price = price;
-            Hp = hp;
-            Description = description;
-            BrandIdF = brandId;
-            ModelIdF = ModelId;
+            this. Price = price;
+            this.Hp = hp;
+            this.Description = description;
+            this.@Model = model_;
         }
     }
 }

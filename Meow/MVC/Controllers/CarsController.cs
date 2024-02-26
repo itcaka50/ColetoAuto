@@ -22,7 +22,7 @@ namespace MVC.Controllers
         // GET: Cars
         public async Task<IActionResult> Index()
         {
-            var meowDbContext = _context.Cars.Include(c => c.Brand).Include(c => c.Model).Include(c => c.User_);
+            var meowDbContext = _context.Cars.Include(c => c.Model).Include(c => c.User);
             return View(await meowDbContext.ToListAsync());
         }
 
@@ -35,10 +35,9 @@ namespace MVC.Controllers
             }
 
             var car = await _context.Cars
-                .Include(c => c.Brand)
                 .Include(c => c.Model)
-                .Include(c => c.User_)
-                .FirstOrDefaultAsync(m => m.CarId == id);
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
                 return NotFound();
@@ -50,8 +49,7 @@ namespace MVC.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name");
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name");
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -61,7 +59,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CarId,BrandIdF,ModelIdF,Price,Mileage,HorsePower,Description,UserId")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,Price,Mileage,HorsePower,Description,UserId,ModelId")] Car car)
         {
             ModelState.Clear();
             if (ModelState.IsValid)
@@ -70,8 +68,7 @@ namespace MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", car.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", car.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", car.ModelId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", car.UserId);
             return View(car);
         }
@@ -89,8 +86,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", car.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", car.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", car.ModelId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", car.UserId);
             return View(car);
         }
@@ -100,9 +96,9 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CarId,BrandIdF,ModelIdF,Price,Mileage,HorsePower,Description,UserId")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Mileage,HorsePower,Description,UserId,ModelId")] Car car)
         {
-            if (id != car.CarId)
+            if (id != car.Id)
             {
                 return NotFound();
             }
@@ -116,7 +112,7 @@ namespace MVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarExists(car.CarId))
+                    if (!CarExists(car.Id))
                     {
                         return NotFound();
                     }
@@ -127,8 +123,7 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandIdF"] = new SelectList(_context.Brands, "BrandId", "Name", car.BrandIdF);
-            ViewData["ModelIdF"] = new SelectList(_context.Models, "ModelId", "Name", car.ModelIdF);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", car.ModelId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", car.UserId);
             return View(car);
         }
@@ -142,10 +137,9 @@ namespace MVC.Controllers
             }
 
             var car = await _context.Cars
-                .Include(c => c.Brand)
                 .Include(c => c.Model)
-                .Include(c => c.User_)
-                .FirstOrDefaultAsync(m => m.CarId == id);
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
                 return NotFound();
@@ -175,7 +169,7 @@ namespace MVC.Controllers
 
         private bool CarExists(int id)
         {
-          return (_context.Cars?.Any(e => e.CarId == id)).GetValueOrDefault();
+          return (_context.Cars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

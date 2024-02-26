@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataLayer.Migrations
 {
-    public partial class barona : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,13 +55,13 @@ namespace DataLayer.Migrations
                 name: "Brands",
                 columns: table => new
                 {
-                    BrandId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brands", x => x.BrandId);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,20 +174,19 @@ namespace DataLayer.Migrations
                 name: "Models",
                 columns: table => new
                 {
-                    ModelId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BrandIdF = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Models", x => x.ModelId);
+                    table.PrimaryKey("PK_Models", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Models_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "BrandId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -200,24 +199,17 @@ namespace DataLayer.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Thrust = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    BrandIdF = table.Column<int>(type: "int", nullable: false),
-                    ModelIdF = table.Column<int>(type: "int", nullable: false)
+                    ModelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Aircrafts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Aircrafts_Brands_BrandIdF",
-                        column: x => x.BrandIdF,
-                        principalTable: "Brands",
-                        principalColumn: "BrandId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Aircrafts_Models_ModelIdF",
-                        column: x => x.ModelIdF,
+                        name: "FK_Aircrafts_Models_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "Models",
-                        principalColumn: "ModelId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,43 +221,35 @@ namespace DataLayer.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Hp = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    BrandIdF = table.Column<int>(type: "int", nullable: false),
-                    ModelIdF = table.Column<int>(type: "int", nullable: false)
+                    ModelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Boats_Brands_BrandIdF",
-                        column: x => x.BrandIdF,
-                        principalTable: "Brands",
-                        principalColumn: "BrandId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Boats_Models_ModelIdF",
-                        column: x => x.ModelIdF,
+                        name: "FK_Boats_Models_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "Models",
-                        principalColumn: "ModelId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Cars",
                 columns: table => new
                 {
-                    CarId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BrandIdF = table.Column<int>(type: "int", nullable: false),
-                    ModelIdF = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Mileage = table.Column<int>(type: "int", nullable: false),
                     HorsePower = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ModelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cars", x => x.CarId);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Cars_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -273,28 +257,17 @@ namespace DataLayer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Cars_Brands_BrandIdF",
-                        column: x => x.BrandIdF,
-                        principalTable: "Brands",
-                        principalColumn: "BrandId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Cars_Models_ModelIdF",
-                        column: x => x.ModelIdF,
+                        name: "FK_Cars_Models_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "Models",
-                        principalColumn: "ModelId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Aircrafts_BrandIdF",
+                name: "IX_Aircrafts_ModelId",
                 table: "Aircrafts",
-                column: "BrandIdF");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Aircrafts_ModelIdF",
-                table: "Aircrafts",
-                column: "ModelIdF");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -336,24 +309,14 @@ namespace DataLayer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Boats_BrandIdF",
+                name: "IX_Boats_ModelId",
                 table: "Boats",
-                column: "BrandIdF");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Boats_ModelIdF",
-                table: "Boats",
-                column: "ModelIdF");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cars_BrandIdF",
+                name: "IX_Cars_ModelId",
                 table: "Cars",
-                column: "BrandIdF");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cars_ModelIdF",
-                table: "Cars",
-                column: "ModelIdF");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_UserId",

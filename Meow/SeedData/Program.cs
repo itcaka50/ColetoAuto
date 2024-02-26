@@ -25,7 +25,7 @@ namespace SeedData
 
                 DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
                 builder.UseSqlServer(
-                    "Server=.\\DEFAULTSQLSERVER;Database=MeowDB2;Trusted_Connection=True;Encrypt=False"
+                    "Server=TIMI-PC;Database=MeowDBV2.1;Trusted_Connection=True;Encrypt=False"
                     );
 
                 MeowDbContext dbContext = new MeowDbContext(builder.Options);
@@ -43,7 +43,7 @@ namespace SeedData
                 dbContext.Roles.Add(new IdentityRole("User") { NormalizedName = "USER" });
                 await dbContext.SaveChangesAsync();
 
-                IdentityResultSet<User> result = await identityContext.CreateUserAsync("GoshoColov", "subuwu", "kusrhiache", 30, "colaja@abv.bg", "0888888888", Role.Administrator);
+                IdentityResultSet<User> result = await identityContext.CreateUserAsync("admin", "admin", "kusrhiache", 30, "admin@abv.bg", "0888888888", Role.Administrator);
 
                 Console.WriteLine("Roles added successfully!");
 

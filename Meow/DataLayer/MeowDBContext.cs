@@ -25,14 +25,13 @@ namespace DataLayer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\DEFAULTSQLSERVER;Database=MeowDB2;Trusted_Connection=True;Encrypt=False");
+                optionsBuilder.UseSqlServer("Server=TIMI-PC;Database=MeowDBV2.1;Trusted_Connection=True;Encrypt=False;MultipleActiveResultSets=true");
             }
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Aircraft>
             base.OnModelCreating(modelBuilder);
         }
 

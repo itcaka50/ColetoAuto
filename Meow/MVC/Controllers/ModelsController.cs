@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BussinessLayer;
 using DataLayer;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers
 {
@@ -23,9 +22,8 @@ namespace MVC.Controllers
         // GET: Models
         public async Task<IActionResult> Index()
         {
-              return _context.Models != null ? 
-                          View(await _context.Models.ToListAsync()) :
-                          Problem("Entity set 'MeowDbContext.Models'  is null.");
+            var meowDbContext = _context.Models.Include(m => m.Brand);
+            return View(await meowDbContext.ToListAsync());
         }
 
         // GET: Models/Details/5
@@ -37,7 +35,8 @@ namespace MVC.Controllers
             }
 
             var model = await _context.Models
-                .FirstOrDefaultAsync(m => m.ModelId == id);
+                .Include(m => m.Brand)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (model == null)
             {
                 return NotFound();
@@ -49,16 +48,16 @@ namespace MVC.Controllers
         // GET: Models/Create
         public IActionResult Create()
         {
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name");
             return View();
         }
 
         // POST: Models/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ModelId,Name,BrandIdF")] Model model)
+        public async Task<IActionResult> Create([Bind("Id,Name,BrandId")] Model model)
         {
             ModelState.Clear();
             if (ModelState.IsValid)
@@ -67,6 +66,7 @@ namespace MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", model.BrandId);
             return View(model);
         }
 
@@ -83,18 +83,18 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", model.BrandId);
             return View(model);
         }
 
         // POST: Models/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ModelId,Name,BrandIdF")] Model model)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BrandId")] Model model)
         {
-            if (id != model.ModelId)
+            if (id != model.Id)
             {
                 return NotFound();
             }
@@ -108,7 +108,7 @@ namespace MVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ModelExists(model.ModelId))
+                    if (!ModelExists(model.Id))
                     {
                         return NotFound();
                     }
@@ -119,6 +119,7 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", model.BrandId);
             return View(model);
         }
 
@@ -131,7 +132,8 @@ namespace MVC.Controllers
             }
 
             var model = await _context.Models
-                .FirstOrDefaultAsync(m => m.ModelId == id);
+                .Include(m => m.Brand)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (model == null)
             {
                 return NotFound();
@@ -141,7 +143,6 @@ namespace MVC.Controllers
         }
 
         // POST: Models/Delete/5
-        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -162,7 +163,7 @@ namespace MVC.Controllers
 
         private bool ModelExists(int id)
         {
-          return (_context.Models?.Any(e => e.ModelId == id)).GetValueOrDefault();
+          return (_context.Models?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

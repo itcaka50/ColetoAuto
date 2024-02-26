@@ -13,39 +13,24 @@ namespace BussinessLayer
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ModelId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [ForeignKey("Brand")]
-        public int BrandIdF { get; set; }
+        public int BrandId { get; set; }
 
-        public Brand brand { get; set; }
-
-        
-        public ICollection<Aircraft> Aircrafts { get; set; }
-
-        
-        public ICollection<Boat> Boats { get; set; }
-        
-      
-        public ICollection<Car> Cars { get; set; }
+        public Brand @Brand { get; set; }
 
         public Model() 
         {
-            Aircrafts = new List<Aircraft>();
-            Boats = new List<Boat>();
-            Cars = new List<Car>();
         }
 
-        public Model(string name, int brandId)
+        public Model(string name, Brand brand_)
         {
-            Name = name;
-            BrandIdF = brandId;
-            Aircrafts = new List<Aircraft>();
-            Boats = new List<Boat>();
-            Cars = new List<Car>();
+            this.Name = name;
+            this.Brand = brand_;
         }
 
     }
