@@ -20,3 +20,5 @@ MAIN PAGE
 BUY PAGE
 RESULTS PAGE
 ADMIN PAGE
+
+To unpack the application, open the banan.zip archive. The archive contents the Meow folder with the fully working web app.
